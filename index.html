@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petualangan Kimia - Lab Interaktif</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+
+    <header class="bg-slate-800 border-b border-cyan-500/30 p-4 shadow-lg">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold text-cyan-400 flex items-center gap-2">
+                <i class="fa-solid font-flask text-2xl"></i> ChemLab Interactive
+            </h1>
+            <span class="text-xs bg-cyan-950 text-cyan-300 px-3 py-1 rounded-full border border-cyan-500/30">
+                Mode Petualangan
+            </span>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto p-6 flex-1 w-full">
+        
+        <div class="text-center my-8">
+            <h2 class="text-3xl font-extrabold text-white mb-2">Selamat Datang di Lab Kimia! 🧪</h2>
+            <p class="text-slate-400 max-w-lg mx-auto">
+                Pahami materi dasar kimia, kuasai rumus-rumusnya, dan selesaikan kuis untuk menguji kemampuanmu!
+            </p>
+        </div>
+
+        <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-6 mb-10 shadow-xl backdrop-blur-sm">
+            <h3 class="text-lg font-bold text-cyan-400 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-compass"></i> Kode Petunjuk & Alur Belajar
+            </h3>
+            
+            <ol class="space-y-4 text-slate-300 text-sm">
+                <li class="flex items-start gap-3">
+                    <span class="bg-cyan-500/20 text-cyan-400 font-bold px-2.5 py-1 rounded-lg border border-cyan-500/30">1</span>
+                    <div>
+                        <strong class="text-white block">Mulai dari Materi 1</strong>
+                        Pelajari materi secara berurutan. Klik tombol "Lanjut" di bagian bawah materi jika sudah selesai membaca.
+                    </div>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="bg-cyan-500/20 text-cyan-400 font-bold px-2.5 py-1 rounded-lg border border-cyan-500/30">2</span>
+                    <div>
+                        <strong class="text-white block">Cek Tabel Periodik</strong>
+                        Gunakan fitur Tabel Periodik Interaktif kapan saja untuk mencari informasi unsur kimia.
+                    </div>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="bg-cyan-500/20 text-cyan-400 font-bold px-2.5 py-1 rounded-lg border border-cyan-500/30">3</span>
+                    <div>
+                        <strong class="text-white block">Uji Pemahaman di Kuis</strong>
+                        Setelah menyelesaikan materi, selesaikan kuis untuk melihat skor akhirmu!
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <a href="materi1.html" class="group bg-slate-800 border border-slate-700 hover:border-cyan-400 p-6 rounded-2xl transition duration-300 hover:-translate-y-1 shadow-lg flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 bg-cyan-500/20 text-cyan-400 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:bg-cyan-500 group-hover:text-slate-900 transition">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-1">Materi Kimia</h4>
+                    <p class="text-xs text-slate-400">Mulai belajar dari Bab 1: Struktur Atom & Rumus Kimia.</p>
+                </div>
+                <div class="mt-6 text-xs text-cyan-400 font-semibold flex items-center gap-1">
+                    Mulai Belajar <i class="fa-solid fa-arrow-right text-xs"></i>
+                </div>
+            </a>
+
+            <a href="tabel-periodik.html" class="group bg-slate-800 border border-slate-700 hover:border-emerald-400 p-6 rounded-2xl transition duration-300 hover:-translate-y-1 shadow-lg flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:bg-emerald-500 group-hover:text-slate-900 transition">
+                        <i class="fa-solid fa-table-cells"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-1">Tabel Periodik</h4>
+                    <p class="text-xs text-slate-400">Eksplorasi unsur-unsur kimia secara interaktif.</p>
+                </div>
+                <div class="mt-6 text-xs text-emerald-400 font-semibold flex items-center gap-1">
+                    Buka Tabel <i class="fa-solid fa-arrow-right text-xs"></i>
+                </div>
+            </a>
+
+            <a href="kuis.html" class="group bg-slate-800 border border-slate-700 hover:border-purple-400 p-6 rounded-2xl transition duration-300 hover:-translate-y-1 shadow-lg flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 bg-purple-500/20 text-purple-400 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:bg-purple-500 group-hover:text-slate-900 transition">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-1">Kuis Kimia</h4>
+                    <p class="text-xs text-slate-400">Uji seberapa paham kamu setelah membaca materi.</p>
+                </div>
+                <div class="mt-6 text-xs text-purple-400 font-semibold flex items-center gap-1">
+                    Mulai Kuis <i class="fa-solid fa-arrow-right text-xs"></i>
+                </div>
+            </a>
+<a href="kalkulator.html" class="group bg-slate-800 border border-cyan-500/50 hover:border-cyan-400 rounded-2xl p-5 shadow-lg hover:shadow-cyan-500/20 transition-all">
+        <div>
+            <div class="w-12 h-12 bg-cyan-500/20 text-cyan-400 rounded-xl flex items-center justify-center mb-4">
+                <i class="fa-solid fa-calculator"></i>
+            </div>
+            <h4 class="text-lg font-bold text-white mb-1">Kalkulator Kimia</h4>
+            <p class="text-xs text-slate-400">Hitung Mol, Massa, Volume STP/RTP & Gas Ideal otomatis</p>
+        </div>
+        <div class="mt-6 text-xs text-cyan-400 font-semibold flex items-center gap-1">
+            Buka Kalkulator <i class="fa-solid fa-arrow-right text-xs"></i>
+        </div>
+    </a>
+        </div>
+    </main>
+
+    <footer class="text-center py-4 text-xs text-slate-500 border-t border-slate-800">
+        Dibuat dengan mila untuk Media Pembelajaran Kimia
+    </footer>
+
+</body>
+</html>

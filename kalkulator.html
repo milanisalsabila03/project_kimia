@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Kalkulator Kimia</title>
+<style>
+body{background:#0f172a;color:white;font-family:sans-serif;padding:20px}
+.box{background:#1e293b;padding:20px;border-radius:16px;max-width:400px;margin:auto;border:1px solid #334155}
+label{font-size:11px;color:#94a3b8}
+input,select{width:100%;padding:12px;margin:4px 0 12px 0;border-radius:8px;border:1px solid #334155;background:#0f172a;color:white;box-sizing:border-box}
+button{width:100%;padding:12px;background:#38bdf8;color:#0f172a;font-weight:bold;border-radius:8px;border:none;cursor:pointer}
+#hasilBox{background:#052e16;border-left:4px solid #22c55e;color:#4ade80;padding:15px;margin-top:15px;border-radius:8px;display:none}
+.hidden{display:none !important;}
+</style>
+</head>
+<body>
+<a href="index.html" style="color:#94a3b8;text-decoration:none;font-size:13px">← Kembali</a>
+<h2 style="color:#38bdf8;text-align:center">🧪 Kalkulator Kimia</h2>
+<div class="box">
+<label>PILIH RUMUS</label>
+<select id="jenis" onchange="gantiLabel()">
+<option value="massa">Massa dari Mol (m = n x Mr)</option>
+<option value="mol">Mol dari Massa (n = m / Mr)</option>
+<option value="stp">Volume STP (V = n x 22.4)</option>
+<option value="rtp">Volume RTP (V = n x 24)</option>
+</select>
+
+<div id="boxA">
+<label id="labelA">JUMLAH MOL (n)</label>
+<input id="inputA" type="number" placeholder="Contoh: 2 mol">
+</div>
+
+<div id="boxB">
+<label id="labelB">MASSA RELATIF (Mr)</label>
+<input id="inputB" type="number" placeholder="Contoh: 32 (O2)">
+</div>
+
+<button onclick="hitungKimia()">Hitung Sekarang</button>
+<div id="hasilBox"></div>
+</div>
+
+<script>
+function gantiLabel(){
+var jenis=document.getElementById("jenis").value;
+var labelA=document.getElementById("labelA");
+var labelB=document.getElementById("labelB");
+var inputA=document.getElementById("inputA");
+var inputB=document.getElementById("inputB");
+var boxB=document.getElementById("boxB");
+
+if(jenis=="massa"){
+labelA.innerText="JUMLAH MOL (n)"; inputA.placeholder="Contoh: 2 mol";
+labelB.innerText="MASSA RELATIF (Mr)"; inputB.placeholder="Contoh: 32 (O2)"; boxB.classList.remove("hidden");
+}
+if(jenis=="mol"){
+labelA.innerText="MASSA (gram)"; inputA.placeholder="Contoh: 64 gram";
+labelB.innerText="MASSA RELATIF (Mr)"; inputB.placeholder="Contoh: 32 (O2)"; boxB.classList.remove("hidden");
+}
+if(jenis=="stp" || jenis=="rtp"){
+labelA.innerText="JUMLAH MOL (n)"; inputA.placeholder="Contoh: 3 mol";
+boxB.classList.add("hidden"); inputB.value="";
+}
+}
+
+function hitungKimia(){
+var jenis=document.getElementById("jenis").value;
+var a=Number(document.getElementById("inputA").value);
+var b=Number(document.getElementById("inputB").value);
+var box=document.getElementById("hasilBox");
+if(!a){box.style.display="block";box.innerHTML="Isi dulu mol nya El!";return;}
+var h=0;
+if(jenis=="massa"){h=a*b; box.style.display="block"; box.innerHTML="✅ m = n x Mr <br> m = " + a + " x " + b + " = <b>" + h + " gram</b>";}
+else if(jenis=="mol"){h=a/b; box.style.display="block"; box.innerHTML="✅ n = m / Mr <br> n = " + a + " / " + b + " = <b>" + h.toFixed(2) + " mol</b>";}
+else if(jenis=="stp"){h=a*22.4; box.style.display="block"; box.innerHTML="✅ V STP = n x 22.4 <br> V = " + a + " x 22.4 = <b>" + h.toFixed(2) + " Liter</b>";}
+else if(jenis=="rtp"){h=a*24; box.style.display="block"; box.innerHTML="✅ V RTP = n x 24 <br> V = " + a + " x 24 = <b>" + h.toFixed(2) + " Liter</b>";}
+}
+gantiLabel();
+</script>
+</body>
+</html>

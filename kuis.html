@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastery Kimia: Konsep Mol & Tabel Periodik</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+        }
+        .container { max-width: 950px; margin: 0 auto; }
+        h1 { text-align: center; color: #38bdf8; margin-bottom: 5px; }
+        .subtitle { text-align: center; color: #94a3b8; margin-bottom: 25px; }
+
+        /* MENU GRID 5 KOTAK */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .menu-card {
+            background-color: #1e293b;
+            border: 2px solid #334155;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .menu-card:hover {
+            transform: translateY(-5px);
+            border-color: #38bdf8;
+            box-shadow: 0 8px 20px rgba(56, 189, 248, 0.3);
+        }
+        .menu-card .icon { font-size: 32px; margin-bottom: 8px; }
+        .menu-card h3 { margin: 0 0 6px 0; color: #38bdf8; font-size: 15px; }
+        .menu-card p { font-size: 12px; color: #94a3b8; margin: 0; }
+
+        /* WADAH KONTEN */
+        .content-box {
+            background-color: #1e293b;
+            border-radius: 12px;
+            padding: 25px;
+            display: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            margin-top: 10px;
+        }
+        .content-box.active { display: block; }
+
+        /* CARD MATERI */
+        .card-item {
+            background-color: #0f172a;
+            border-left: 4px solid #38bdf8;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .rumus {
+            background-color: #0284c7;
+            color: white;
+            padding: 4px 8px;
+            font-family: monospace;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        /* STYLING KUIS INTERAKTIF */
+        .quiz-card {
+            background-color: #0f172a;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #334155;
+        }
+        .quiz-title {
+            color: #38bdf8;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+        .option-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            background-color: #1e293b;
+            color: #cbd5e1;
+            border: 1px solid #334155;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 15px;
+        }
+        .option-btn:hover {
+            background-color: #334155;
+            color: #fff;
+        }
+        .option-btn.correct {
+            background-color: #15803d !important;
+            color: #fff !important;
+            border-color: #22c55e !important;
+        }
+        .option-btn.wrong {
+            background-color: #b91c1c !important;
+            color: #fff !important;
+            border-color: #ef4444 !important;
+        }
+        .explanation {
+            margin-top: 12px;
+            padding: 12px;
+            background-color: #1e293b;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #cbd5e1;
+            display: none;
+            border-left: 3px solid #eab308;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .page-btn {
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .page-btn:disabled {
+            background-color: #334155;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Modul Pembelajaran Kimia</h1>
+    <div class="subtitle">Eksplorasi Konsep Mol & Latihan 50 Soal Interaktif</div>
+
+    <div class="menu-grid">
+        <div class="menu-card" onclick="bukaMenu('materi1')">
+            <div class="icon">⚖️</div>
+            <h3>1. Mol & Massa</h3>
+            <p>Hubungan Mol dengan Massa Molar (Ar/Mr)</p>
+        </div>
+
+        <div class="menu-card" onclick="bukaMenu('materi2')">
+            <div class="icon">🎈</div>
+            <h3>2. Mol & Volume</h3>
+            <p>Volume Molar Standar (STP & RTP)</p>
+        </div>
+
+        <div class="menu-card" onclick="bukaMenu('materi3')">
+            <div class="icon">🌡️</div>
+            <h3>3. Gas Ideal</h3>
+            <p>Persamaan Gas Ideal (PV = nRT)</p>
+        </div>
+
+        <div class="menu-card" onclick="bukaMenu('materi4')">
+            <div class="icon">🔄</div>
+            <h3>4. Pembanding Gas</h3>
+            <p>Keadaan Mengacu Gas Lain</p>
+        </div>
+
+        <div class="menu-card" style="border-color: #38bdf8; background: rgba(56, 189, 248, 0.1);" onclick="bukaMenu('kuis')">
+            <div class="icon">✏️</div>
+            <h3>5. Kuis 50 Soal</h3>
+            <p>Uji Pemahaman Konsep Mol</p>
+        </div>
+    </div>
+
+    <div id="materi1" class="content-box">
+        <h2>⚖️ 1. Hubungan Mol dengan Massa</h2>
+        <div class="card-item">
+            <h3>Rumus Dasar:</h3>
+            <p><span class="rumus">Massa (gram) = n × Mr</span> &nbsp; atau &nbsp; <span class="rumus">n = Massa / Mr</span></p>
+            <ul>
+                <li><strong>n:</strong> Jumlah Mol (mol)</li>
+                <li><strong>Mr / Ar:</strong> Massa Molar / Massa Atom Relatif (g/mol)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="materi2" class="content-box">
+        <h2>🎈 2. Hubungan Mol dengan Volume Molar</h2>
+        <div class="card-item">
+            <h3>1. Keadaan Standar (STP)</h3>
+            <p>Diukur pada suhu 0 °C dan tekanan 1 atm &rarr; <span class="rumus">Vm = 22,4 L/mol</span></p>
+            <p><span class="rumus">V = n × 22,4 Liter</span></p>
+        </div>
+        <div class="card-item">
+            <h3>2. Keadaan Kamar (RTP)</h3>
+            <p>Diukur pada suhu 25 °C dan tekanan 1 atm &rarr; <span class="rumus">Vm = 24 L/mol</span></p>
+            <p><span class="rumus">V = n × 24 Liter</span></p>
+        </div>
+    </div>
+
+    <div id="materi3" class="content-box">
+        <h2>🌡️ 3. Keadaan Suhu dan Tekanan Tertentu (Gas Ideal)</h2>
+        <div class="card-item">
+            <h3>Persamaan Gas Ideal:</h3>
+            <p><span class="rumus">P × V = n × R × T</span></p>
+            <ul>
+                <li><strong>P:</strong> Tekanan Gas (atm)</li>
+                <li><strong>V:</strong> Volume Gas (Liter)</li>
+                <li><strong>n:</strong> Jumlah Mol (mol)</li>
+                <li><strong>R:</strong> Tetapan Gas (0,082 L.atm/mol.K)</li>
+                <li><strong>T:</strong> Suhu Mutlak (Kelvin = °C + 273)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="materi4" class="content-box">
+        <h2>🔄 4. Keadaan yang Mengacu pada Gas Lain</h2>
+        <div class="card-item">
+            <p>Jika dua jenis gas diukur pada suhu (T) dan tekanan (P) yang sama, berlaku perbandingan:</p>
+            <p><span class="rumus">V1 / V2 = n1 / n2</span> &nbsp; atau &nbsp; <span class="rumus">V1 / n1 = V2 / n2</span></p>
+        </div>
+    </div>
+
+    <div id="kuis" class="content-box active">
+        <h2>✏️ Kuis Konsep Mol (50 Soal)</h2>
+        <p>Jawab pertanyaan di bawah ini untuk menguji pemahamanmu!</p>
+        <hr style="border: 0; border-top: 1px solid #334155; margin-bottom: 20px;">
+
+        <div id="quiz-container"></div>
+
+        <div class="pagination">
+            <button id="prev-btn" class="page-btn" onclick="gantiSoal(-1)">&larr; Sebelumnya</button>
+            <span id="page-info" style="color: #38bdf8; font-weight: bold;">Soal 1 dari 50</span>
+            <button id="next-btn" class="page-btn" onclick="gantiSoal(1)">Berikutnya &rarr;</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function bukaMenu(idMenu) {
+        let kumpulKonten = document.getElementsByClassName("content-box");
+        for (let i = 0; i < kumpulKonten.length; i++) {
+            kumpulKonten[i].classList.remove("active");
+        }
+        document.getElementById(idMenu).classList.add("active");
+        document.getElementById(idMenu).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    const bankSoal = [
+        // --- TOPIK 1: MOL & MASSA ---
+        { q: "Berapakah massa dari 2 mol air (H2O) jika Ar H = 1 dan Ar O = 16?", opt: ["18 gram", "36 gram", "54 gram", "72 gram"], ans: 1, exp: "Mr H2O = 2(1) + 16 = 18 g/mol. Maka Massa = 2 mol x 18 g/mol = 36 gram." },
+        { q: "Berapa jumlah mol yang terdapat dalam 44 gram gas CO2 (Mr = 44 g/mol)?", opt: ["0,5 mol", "1 mol", "2 mol", "44 mol"], ans: 1, exp: "n = Massa / Mr = 44 / 44 = 1 mol." },
+        { q: "Berapakah massa molar dari natrium hidroksida (NaOH) jika Ar Na = 23, Ar O = 16, dan Ar H = 1?", opt: ["24 g/mol", "39 g/mol", "40 g/mol", "50 g/mol"], ans: 2, exp: "Mr NaOH = 23 + 16 + 1 = 40 g/mol." },
+        { q: "Berapa gram CaCO3 (Mr = 100 g/mol) yang terdapat dalam 0,5 mol senyawa tersebut?", opt: ["25 gram", "50 gram", "100 gram", "200 gram"], ans: 1, exp: "Massa = n x Mr = 0,5 mol x 100 g/mol = 50 gram." },
+        { q: "Berapa jumlah mol dalam 8 gram gas oksigen (O2, Ar O = 16)?", opt: ["0,25 mol", "0,5 mol", "1 mol", "2 mol"], ans: 0, exp: "Mr O2 = 2 x 16 = 32 g/mol. n = 8 / 32 = 0,25 mol." },
+        { q: "Berapa massa dari 3 mol gas nitrogen (N2, Ar N = 14)?", opt: ["42 gram", "84 gram", "28 gram", "56 gram"], ans: 1, exp: "Mr N2 = 28 g/mol. Massa = 3 x 28 = 84 gram." },
+        { q: "Berapa jumlah mol dari 5,85 gram garam dapur (NaCl, Ar Na = 23, Ar Cl = 35,5)?", opt: ["0,01 mol", "0,1 mol", "0,5 mol", "1 mol"], ans: 1, exp: "Mr NaCl = 23 + 35,5 = 58,5 g/mol. n = 5,85 / 58,5 = 0,1 mol." },
+        { q: "Suatu sampel zat bermassa 12 gram mempunyai jumlah mol 0,2 mol. Berapakah Mr zat tersebut?", opt: ["24 g/mol", "60 g/mol", "120 g/mol", "2,4 g/mol"], ans: 1, exp: "Mr = Massa / n = 12 / 0,2 = 60 g/mol." },
+        { q: "Berapa massa dari 4 mol gas Helium (He, Ar He = 4)?", opt: ["1 gram", "8 gram", "16 gram", "32 gram"], ans: 2, exp: "Massa = n x Ar = 4 x 4 = 16 gram." },
+        { q: "Jika 0,25 mol logam X bermassa 10 gram, berapakah massa atom relatif (Ar) logam X?", opt: ["20 g/mol", "25 g/mol", "40 g/mol", "100 g/mol"], ans: 2, exp: "Ar = Massa / n = 10 / 0,25 = 40 g/mol." },
+        { q: "Berapa massa dari 0,2 mol H2SO4 (Mr = 98 g/mol)?", opt: ["9,8 gram", "19,6 gram", "49,0 gram", "196 gram"], ans: 1, exp: "Massa = 0,2 x 98 = 19,6 gram." },
+        { q: "Berapa jumlah mol dalam 14 gram gas N2 (Mr = 28 g/mol)?", opt: ["0,25 mol", "0,5 mol", "1 mol", "2 mol"], ans: 1, exp: "n = 14 / 28 = 0,5 mol." },
+        { q: "Berapa massa dari 5 mol glukosa (C6H12O6, Mr = 180 g/mol)?", opt: ["180 gram", "360 gram", "900 gram", "1800 gram"], ans: 2, exp: "Massa = 5 x 180 = 900 gram." },
+
+        // --- TOPIK 2: MOL & VOLUME MOLAR (STP & RTP) ---
+        { q: "Berapakah volume 1 mol gas ideal pada keadaan Standar (STP)?", opt: ["22,4 Liter", "24,0 Liter", "11,2 Liter", "22,0 Liter"], ans: 0, exp: "Pada STP (0°C, 1 atm), Vm gas ideal adalah 22,4 L/mol." },
+        { q: "Berapakah volume 1 mol gas ideal pada keadaan Kamar (RTP)?", opt: ["22,4 Liter", "24,0 Liter", "12,0 Liter", "48,0 Liter"], ans: 1, exp: "Pada RTP (25°C, 1 atm), Vm gas ideal adalah 24 L/mol." },
+        { q: "Berapa volume dari 0,5 mol gas O2 pada kondisi STP?", opt: ["11,2 Liter", "22,4 Liter", "12,0 Liter", "24,0 Liter"], ans: 0, exp: "V = n x Vm (STP) = 0,5 x 22,4 L = 11,2 Liter." },
+        { q: "Berapa volume 2 mol gas N2 pada keadaan kamar (RTP)?", opt: ["22,4 Liter", "44,8 Liter", "24,0 Liter", "48,0 Liter"], ans: 3, exp: "V = n x Vm (RTP) = 2 x 24 L = 48,0 Liter." },
+        { q: "Berapa jumlah mol gas CO2 yang bervolume 5,6 Liter pada keadaan STP?", opt: ["0,1 mol", "0,25 mol", "0,5 mol", "1 mol"], ans: 1, exp: "n = V / Vm = 5,6 / 22,4 = 0,25 mol." },
+        { q: "Berapa jumlah mol gas H2 yang bervolume 12 Liter pada keadaan RTP?", opt: ["0,25 mol", "0,5 mol", "1 mol", "2 mol"], ans: 1, exp: "n = V / Vm = 12 / 24 = 0,5 mol." },
+        { q: "Pada kondisi STP, berapakah volume dari 8 gram gas CH4 (Mr = 16 g/mol)?", opt: ["5,6 Liter", "11,2 Liter", "22,4 Liter", "44,8 Liter"], ans: 1, exp: "n = 8/16 = 0,5 mol. V (STP) = 0,5 x 22,4 = 11,2 Liter." },
+        { q: "Berapa massa dari 4,48 Liter gas O2 (Mr = 32 g/mol) pada kondisi STP?", opt: ["3,2 gram", "6,4 gram", "12,8 gram", "32 gram"], ans: 1, exp: "n = 4,48 / 22,4 = 0,2 mol. Massa = 0,2 x 32 = 6,4 gram." },
+        { q: "Berapa volume dari 0,1 mol gas Helium pada keadaan STP?", opt: ["0,224 Liter", "2,24 Liter", "22,4 Liter", "2,4 Liter"], ans: 1, exp: "V = 0,1 x 22,4 = 2,24 Liter." },
+        { q: "Berapa volume dari 3 mol gas CO2 pada kondisi RTP?", opt: ["67,2 Liter", "72,0 Liter", "24,0 Liter", "48,0 Liter"], ans: 1, exp: "V = 3 x 24 = 72 Liter." },
+        { q: "Jika sampel gas N2 memiliki volume 6 Liter pada RTP, berapa mol gas tersebut?", opt: ["0,25 mol", "0,5 mol", "0,75 mol", "1 mol"], ans: 0, exp: "n = 6 / 24 = 0,25 mol." },
+        { q: "Berapa massa gas SO2 (Mr = 64 g/mol) jika volumenya pada STP adalah 11,2 Liter?", opt: ["16 gram", "32 gram", "64 gram", "128 gram"], ans: 1, exp: "n = 11,2 / 22,4 = 0,5 mol. Massa = 0,5 x 64 = 32 gram." },
+        { q: "Berapa volume dari 1,5 mol gas H2 pada keadaan STP?", opt: ["22,4 Liter", "33,6 Liter", "44,8 Liter", "36,0 Liter"], ans: 1, exp: "V = 1,5 x 22,4 = 33,6 Liter." },
+
+        // --- TOPIK 3: GAS IDEAL (PV = nRT) ---
+        { q: "Hitung volume 1 mol gas O2 pada suhu 27 °C dan tekanan 1 atm (R = 0,082 L.atm/mol.K)!", opt: ["22,4 Liter", "24,6 Liter", "27,0 Liter", "30,0 Liter"], ans: 1, exp: "T = 27 + 273 = 300 K. V = (1 x 0,082 x 300) / 1 = 24,6 Liter." },
+        { q: "Berapa tekanan dari 2 mol gas N2 bervolume 8,2 Liter pada suhu 127 °C?", opt: ["2 atm", "4 atm", "8 atm", "10 atm"], ans: 2, exp: "T = 127 + 273 = 400 K. P = (n.R.T)/V = (2 x 0,082 x 400) / 8,2 = 8 atm." },
+        { q: "Berapa jumlah mol gas dalam wadah 16,4 Liter bertekanan 2 atm pada suhu 300 K?", opt: ["0,75 mol", "1,03 mol", "1,33 mol", "2,0 mol"], ans: 2, exp: "n = (P.V)/(R.T) = (2 x 16,4) / (0,082 x 300) = 32,8 / 24,6 ≈ 1,33 mol." },
+        { q: "Berapakah suhu (dalam Kelvin) jika 0,5 mol gas bervolume 4,1 Liter memiliki tekanan 3 atm?", opt: ["100 K", "200 K", "300 K", "400 K"], ans: 2, exp: "T = (P.V)/(n.R) = (3 x 4,1) / (0,5 x 0,082) = 12,3 / 0,041 = 300 K." },
+        { q: "Hitung volume 0,2 mol gas pada suhu 27 °C dan tekanan 2 atm!", opt: ["1,23 Liter", "2,46 Liter", "4,92 Liter", "24,6 Liter"], ans: 1, exp: "T = 300 K. V = (0,2 x 0,082 x 300) / 2 = 2,46 Liter." },
+        { q: "Berapa tekanan 1 mol gas yang menempati wadah 24,6 Liter pada suhu 27 °C?", opt: ["0,5 atm", "1 atm", "1,5 atm", "2 atm"], ans: 1, exp: "T = 300 K. P = (1 x 0,082 x 300) / 24,6 = 24,6 / 24,6 = 1 atm." },
+        { q: "Berapa suhu (dalam Celsius) dari 1 mol gas bervolume 24,6 L pada tekanan 1 atm?", opt: ["0 °C", "25 °C", "27 °C", "100 °C"], ans: 2, exp: "T = (1 x 24,6) / (1 x 0,082) = 300 K. t = 300 - 273 = 27 °C." },
+        { q: "Hitung volume 4 mol gas Helium pada suhu 127 °C dan tekanan 4 atm!", opt: ["16,4 Liter", "32,8 Liter", "8,2 Liter", "24,6 Liter"], ans: 1, exp: "T = 400 K. V = (4 x 0,082 x 400) / 4 = 32,8 Liter." },
+        { q: "Suatu gas bervolume 8,2 L bertekanan 3 atm pada suhu 300 K. Berapa gram massa gas tersebut jika Mr = 40?", opt: ["20 gram", "40 gram", "60 gram", "80 gram"], ans: 1, exp: "n = (3 x 8,2)/(0,082 x 300) = 1 mol. Massa = 1 x 40 = 40 gram." },
+        { q: "Berapa tekanan yang dihasilkan 0,5 mol gas CO2 dalam wadah 4,1 L pada suhu 27 °C?", opt: ["1 atm", "2 atm", "3 atm", "4 atm"], ans: 2, exp: "T = 300 K. P = (0,5 x 0,082 x 300) / 4,1 = 12,3 / 4,1 = 3 atm." },
+        { q: "Berapa volume dari 0,4 mol gas O2 pada suhu 200 K dan tekanan 0,82 atm?", opt: ["4 Liter", "8 Liter", "12 Liter", "16 Liter"], ans: 1, exp: "V = (0,4 x 0,082 x 200) / 0,82 = 8 Liter." },
+        { q: "Berapa mol gas yang berada dalam wadah 12,3 L bertekanan 2 atm pada suhu 300 K?", opt: ["0,5 mol", "1 mol", "1,5 mol", "2 mol"], ans: 1, exp: "n = (2 x 12,3) / (0,082 x 300) = 24,6 / 24,6 = 1 mol." },
+
+        // --- TOPIK 4: KEADAAN MENGACU GAS LAIN ---
+        { q: "Pada T dan P tertentu, 1 mol gas N2 bervolume 10 L. Pada kondisi sama, berapa volume 3 mol gas O2?", opt: ["10 Liter", "20 Liter", "30 Liter", "40 Liter"], ans: 2, exp: "V1/V2 = n1/n2 => 10/V2 = 1/3 => V2 = 30 Liter." },
+        { q: "Pada T dan P tertentu, 2 mol gas A bervolume 12 L. Berapa volume 0,5 mol gas B pada kondisi sama?", opt: ["3 Liter", "6 Liter", "12 Liter", "24 Liter"], ans: 0, exp: "V1/V2 = n1/n2 => 12/V2 = 2/0,5 => V2 = 3 Liter." },
+        { q: "Jika 4 gram gas CH4 (Mr = 16) bervolume 5 L, berapa volume 14 gram gas N2 (Mr = 28) pada T dan P sama?", opt: ["5 Liter", "10 Liter", "15 Liter", "20 Liter"], ans: 1, exp: "n CH4 = 4/16 = 0,25 mol. n N2 = 14/28 = 0,5 mol. 5/V2 = 0,25/0,5 => V2 = 10 Liter." },
+        { q: "Pada T dan P sama, 0,2 mol gas X bervolume 4 L. Jika gas Y pada kondisi tersebut bervolume 10 L, berapa mol gas Y?", opt: ["0,3 mol", "0,5 mol", "0,8 mol", "1,0 mol"], ans: 1, exp: "V1/n1 = V2/n2 => 4 / 0,2 = 10 / n2 => n2 = 0,5 mol." },
+        { q: "Jika 11 gram gas CO2 (Mr = 44) bervolume 6 L, berapa volume 8 gram gas O2 (Mr = 32) pada kondisi sama?", opt: ["3 Liter", "6 Liter", "9 Liter", "12 Liter"], ans: 1, exp: "n CO2 = 11/44 = 0,25 mol. n O2 = 8/32 = 0,25 mol. Karena mol sama, maka volume sama = 6 Liter." },
+        { q: "Pada T dan P yang sama, 2 Liter gas NO2 bermassa 4,6 gram (Mr = 46). Berapa volume 1,6 gram gas O2 (Mr = 32)?", opt: ["0,4 Liter", "1,0 Liter", "2,0 Liter", "4,0 Liter"], ans: 1, exp: "n NO2 = 4,6/46 = 0,1 mol. n O2 = 1,6/32 = 0,05 mol. 2/V2 = 0,1/0,05 => V2 = 1 Liter." },
+        { q: "Pada T dan P tertentu, 1 mol gas CO bervolume 25 L. Berapa mol gas H2 yang bervolume 50 L pada kondisi tersebut?", opt: ["1 mol", "2 mol", "3 mol", "4 mol"], ans: 1, exp: "25 / 50 = 1 / n2 => n2 = 2 mol." },
+        { q: "Pada kondisi sama, 0,5 mol gas A bervolume 8 L. Berapa volume 1,5 mol gas B?", opt: ["16 Liter", "24 Liter", "32 Liter", "40 Liter"], ans: 1, exp: "8 / V2 = 0,5 / 1,5 => V2 = 24 Liter." },
+        { q: "Jika 3 gram gas H2 (Mr = 2) bervolume 18 L, berapa volume 16 gram gas O2 (Mr = 32) pada T dan P sama?", opt: ["6 Liter", "12 Liter", "18 Liter", "24 Liter"], ans: 0, exp: "n H2 = 3/2 = 1,5 mol. n O2 = 16/32 = 0,5 mol. 18 / V2 = 1,5 / 0,5 => V2 = 6 Liter." },
+        { q: "Pada T dan P tertentu, 10 L gas O2 mengandung 0,4 mol. Berapa mol gas N2 dalam wadah 15 L pada kondisi sama?", opt: ["0,4 mol", "0,6 mol", "0,8 mol", "1,0 mol"], ans: 1, exp: "10 / 15 = 0,4 / n2 => n2 = 0,6 mol." },
+        { q: "Pada kondisi sama, 1 Liter gas X bermassa 1,4 gram dan 1 Liter gas Y bermassa 1,6 gram. Berapa perbandingan Mr gas X dan Y?", opt: ["7 : 8", "8 : 7", "1 : 2", "2 : 1"], ans: 0, exp: "Karena volume sama, jumlah mol sama. Maka Mr1 : Mr2 = Massa1 : Massa2 = 1,4 : 1,6 = 7 : 8." },
+        { q: "Jika 5 Liter gas N2 (0,2 mol) berada pada T dan P tertentu, berapa volume dari 0,6 mol gas NH3 pada kondisi tersebut?", opt: ["10 Liter", "15 Liter", "20 Liter", "25 Liter"], ans: 1, exp: "5 / V2 = 0,2 / 0,6 => V2 = 15 Liter." }
+    ];
+
+    let currentQuestion = 0;
+
+    function renderSoal(index) {
+        const item = bankSoal[index];
+        if (!item) return;
+
+        let html = `
+            <div class="quiz-card">
+                <div class="quiz-title">Soal #${index + 1}</div>
+                <p style="font-size: 16px; margin-bottom: 15px; line-height:1.5;">${item.q}</p>
+        `;
+
+        item.opt.forEach((option, i) => {
+            html += `<button class="option-btn" onclick="pilihJawaban(${index}, ${i}, this)">${String.fromCharCode(65+i)}. ${option}</button>`;
+        });
+
+        html += `
+                <div id="exp-${index}" class="explanation">
+                    <strong>Jawaban & Pembahasan:</strong><br>${item.exp}
+                </div>
+            </div>
+        `;
+
+        document.getElementById("quiz-container").innerHTML = html;
+        document.getElementById("page-info").innerText = `Soal ${index + 1} dari ${bankSoal.length}`;
+        
+        document.getElementById("prev-btn").disabled = index === 0;
+        document.getElementById("next-btn").disabled = index === bankSoal.length - 1;
+    }
+
+    function pilihJawaban(qIndex, choiceIndex, btn) {
+        const item = bankSoal[qIndex];
+        const buttons = btn.parentElement.querySelectorAll('.option-btn');
+        
+        buttons.forEach(b => b.disabled = true);
+
+        if (choiceIndex === item.ans) {
+            btn.classList.add('correct');
+        } else {
+            btn.classList.add('wrong');
+            buttons[item.ans].classList.add('correct');
+        }
+
+        document.getElementById(`exp-${qIndex}`).style.display = 'block';
+    }
+
+    function gantiSoal(step) {
+        currentQuestion += step;
+        if (currentQuestion >= 0 && currentQuestion < bankSoal.length) {
+            renderSoal(currentQuestion);
+        }
+    }
+
+    // Tampilkan soal nomor 1 secara otomatis begitu dibuka
+    renderSoal(0);
+</script>
+
+</body>
+</html>
